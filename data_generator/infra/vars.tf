@@ -9,6 +9,6 @@ variable "resource_group_location" {
 }
 
 variable "resource_group_name" {
-  default	= "1-f36715a6-playground-sandbox"
+  default	= "1-01263fcc-playground-sandbox"
   description   = "Default resource group name"
 }

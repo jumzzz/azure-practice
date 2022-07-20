@@ -17,13 +17,14 @@ resource "azurerm_storage_account" "storageaccount" {
     account_replication_type = "LRS"
 }
 
+
 resource "azurerm_container_group" "data_gen_container" {
     name                = "data-gen"
     location            = "${var.resource_group_location}" 
     resource_group_name = "${var.resource_group_name}"
     
     ip_address_type     = "Public"
-    dns_name_label      = "aci-label"
+    dns_name_label      = "data-gen-jumz-label"
     os_type             = "Linux"
     
     container {
@@ -32,9 +33,15 @@ resource "azurerm_container_group" "data_gen_container" {
         cpu    = "0.5"
         memory = "1.5"
 
-        environment_variables {
-            AZURE_STORAGE_CONNECTION_STRING = data.azurerm_storage_account.storageaccount.primary_access_key
-        }
+        environment_variables = {
+	     AZURE_STORAGE_CONNECTION_STRING:"${azurerm_storage_account.storageaccount.primary_connection_string}"
+	}
+
+    	ports {
+		port     = 443
+		protocol = "TCP"
+    	}
+
     }
     
     tags = {
