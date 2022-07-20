@@ -17,3 +17,5 @@ RUN pip install -r requirements.txt
 
 # copy project
 COPY project /usr/src/app/project/
+
+CMD ["python", "data_gen.py"]
